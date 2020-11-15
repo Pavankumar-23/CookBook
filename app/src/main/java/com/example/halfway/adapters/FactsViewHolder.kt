@@ -3,9 +3,11 @@ package com.example.halfway.adapters
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.util.ViewPreloadSizeProvider
+import com.example.halfway.R
 import com.example.halfway.listeners.OnFactClickListener
 import com.example.halfway.model.Facts
 
@@ -24,13 +26,22 @@ class FactsViewHolder(
         listener.onFactClick(adapterPosition)
     }
 
-    fun onBind(fact: Facts) {
-        requestManager
-            .load(fact.imageUrl)
-            .into(image)
+    init {
+        image = view.findViewById(R.id.iv_factImage)
+        title = view.findViewById(R.id.tv_title)
+        desc = view.findViewById(R.id.tv_desc)
+        view.setOnClickListener(this)
+    }
 
-        title.setText(fact.title)
-        desc.setText(fact.description)
-        viewPreloadSizeProvider.setView(image)
+    fun onBind(fact: Facts?) {
+        if (fact != null) {
+            requestManager
+                .load(fact.imageUrl)
+                .into(image)
+
+            title.setText(fact.title)
+            desc.setText(fact.description)
+            viewPreloadSizeProvider.setView(image)
+        }
     }
 }

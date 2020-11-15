@@ -1,6 +1,53 @@
 package com.example.halfway.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.halfway.cache.FactsDb
+import com.example.halfway.model.Facts
+import com.example.halfway.repositories.MainRepo
+import com.example.halfway.util.Util
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val TAG = "MainViewModel"
+    private val context : Application
+
+    private val factsDao = FactsDb.getDatabase(application).factsDao()
+    val mainRepo: MainRepo by lazy {
+        MainRepo(
+            application.applicationContext,
+            viewModelScope,
+            factsDao
+        ).getInstance()
+    }
+
+    lateinit var factsList: LiveData<List<Facts>>
+
+    init {
+        getFactsFromServer()
+        context = application
+    }
+
+    private fun getFactsFromServer() {
+        try {
+            if (Util.isNetworkConnectionAvailable(getApplication())) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    mainRepo.getFacts()
+                }
+            } else {
+                factsList = mainRepo.loadFromDB()
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, e.message)
+        }
+    }
+
+    fun getFacts(): LiveData<List<Facts>>? {
+        factsList = mainRepo.getAsLiveData()
+        return factsList
+    }
 }

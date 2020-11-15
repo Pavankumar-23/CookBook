@@ -15,23 +15,22 @@ import com.example.halfway.model.Facts
 import java.util.*
 
 class FactsAdapter(
-    val requestManager: RequestManager, val listener: OnFactClickListener,
-    val preloadSizeProvider: ViewPreloadSizeProvider<String>
+    private val listener: OnFactClickListener,
+    private val requestManager: RequestManager,
+    private val preloadSizeProvider: ViewPreloadSizeProvider<String>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ListPreloader.PreloadModelProvider<String> {
 
 
     private var factList: List<Facts?>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var view: View
+        val view: View
         view = LayoutInflater.from(parent.context).inflate(R.layout.fact_item_view, parent, false)
         return FactsViewHolder(view, requestManager, listener, preloadSizeProvider)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (factList != null) {
-            (holder as FactsViewHolder).onBind(factList?.get(position)!!)
-        }
+        (holder as FactsViewHolder).onBind(factList?.get(position))
     }
 
     override fun getItemCount(): Int {
@@ -50,5 +49,17 @@ class FactsAdapter(
         return requestManager.load(item)
     }
 
+    fun getSelectedRecipe(position: Int): Facts? {
+        if (factList != null) {
+            if (factList?.size ?: 0 > 0) {
+                return factList?.get(position)
+            }
+        }
+        return null
+    }
 
+    fun setFacts(recipes: List<Facts?>) {
+        factList = recipes
+        notifyDataSetChanged()
+    }
 }
