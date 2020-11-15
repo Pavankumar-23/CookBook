@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">halfway</string>
+    <string name="fact_image">Fact Image</string>
 </resources>
