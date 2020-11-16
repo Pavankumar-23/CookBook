@@ -11,9 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Halfway">
-        <activity android:name=".ui.FactActivity"/>
+        android:theme="@style/Theme.Halfway"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.FactActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

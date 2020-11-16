@@ -1,5 +1,6 @@
 package com.example.halfway.ui
 
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +24,8 @@ class FactActivity : AppCompatActivity() {
     private fun init() {
         var intent = intent.extras
         var fact : Facts = intent?.get("fact") as Facts
+        toolbar.title = fact.title
+        toolbar.setTitleTextColor(Color.WHITE)
         tv_fact_title.text = fact.title
         tv_fact_desc.text = fact.description
         initGlide().load(fact.imageUrl)
