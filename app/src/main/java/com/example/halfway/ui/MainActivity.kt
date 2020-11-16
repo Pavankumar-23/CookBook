@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), OnFactClickListener {
             pullToRefresh = findViewById(R.id.pullToRefresh)
 
             pullToRefresh.setOnRefreshListener(OnRefreshListener {
-                subscribeToFactsObservers()
+                mainViewModel.getFactsFromServer()
                 pullToRefresh.setRefreshing(false)
             })
         } catch (e: Exception) {

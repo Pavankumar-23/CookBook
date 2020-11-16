@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "MainViewModel"
-    private val context : Application
+    private val context: Application
 
     private val factsDao = FactsDb.getDatabase(application).factsDao()
     val mainRepo: MainRepo by lazy {
@@ -32,14 +32,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         context = application
     }
 
-    private fun getFactsFromServer() {
+    fun getFactsFromServer() {
         try {
-            if (Util.isNetworkConnectionAvailable(getApplication())) {
-                viewModelScope.launch(Dispatchers.IO) {
-                    mainRepo.getFacts()
-                }
-            } else {
-                factsList = mainRepo.loadFromDB()
+            viewModelScope.launch(Dispatchers.IO) {
+                mainRepo.getFacts()
             }
         } catch (e: Exception) {
             Log.e(TAG, e.message)
@@ -47,6 +43,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getFacts(): LiveData<List<Facts>>? {
+
         factsList = mainRepo.getAsLiveData()
         return factsList
     }

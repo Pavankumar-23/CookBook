@@ -7,7 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.halfway.model.Facts
 
-@Database(entities = [Facts::class], version = 1)
+@Database(entities = [Facts::class], version = 1,exportSchema = false)
 abstract class FactsDb : RoomDatabase() {
     abstract fun factsDao(): FactsDao
 

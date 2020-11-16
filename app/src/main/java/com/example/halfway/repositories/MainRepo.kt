@@ -38,15 +38,19 @@ class MainRepo(
     fun getFacts() {
         try {
             val facts: LiveData<List<Facts>> = loadFromDB()
-            if (facts.value == null) {
-                if (Util.isNetworkConnectionAvailable(context)) {
-                    loadFromServer(facts)
-                }
-            } else {
+            viewModelScope.launch(Dispatchers.Main) {
                 factsList.addSource(facts) {
-                    setValue(it)
+                    factsList.removeSource(facts)
+                    if (Util.isNetworkConnectionAvailable(context)) {
+                        loadFromServer(facts)
+                    } else {
+                        factsList.addSource(facts) {
+                            setValue(it)
+                        }
+                    }
                 }
             }
+
         } catch (e: Exception) {
             Log.e(TAG, "getFacts: " + e.message)
         }
@@ -59,7 +63,10 @@ class MainRepo(
                 override fun onResponse(call: Call<FactsList>, response: Response<FactsList>) {
                     if (response.body() != null) {
                         cacheServiceResult(response.body()!!.rows)
-                        setValue(response.body()!!.rows)
+                        factsList.removeSource(facts)
+                        factsList.addSource(loadFromDB()){
+                            setValue(it)
+                        }
                     }
                 }
 
