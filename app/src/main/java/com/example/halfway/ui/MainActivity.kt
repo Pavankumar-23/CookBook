@@ -3,13 +3,18 @@ package com.example.halfway.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
@@ -18,95 +23,36 @@ import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.example.halfway.R
 import com.example.halfway.adapters.FactsAdapter
 import com.example.halfway.listeners.OnFactClickListener
-import com.example.halfway.util.Util
+import com.example.halfway.util.NetworkResult
 import com.example.halfway.util.VerticalSpacingItemDecorator
+import com.example.halfway.util.observeOnce
 import com.example.halfway.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), OnFactClickListener {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
-    private val TAG = "MainActivity"
-    lateinit var rcv_datalist: RecyclerView
-    lateinit var mainViewModel: MainViewModel
-    lateinit var mAdapter: FactsAdapter
-    lateinit var pullToRefresh: SwipeRefreshLayout
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        init()
-        initRecyclerView()
-        subscribeToFactsObservers()
-    }
-
-    private fun subscribeToFactsObservers() {
-        try {
-            mainViewModel.getFacts()?.observe(this, {
-                if (it != null) {
-                    mAdapter.setFacts(it)
-                }
-            })
-        } catch (e: Exception) {
-            Log.e(TAG, e.message)
-        }
-    }
-
-    private fun initRecyclerView() {
-        try {
-            val viewPreloader = ViewPreloadSizeProvider<String>()
-            mAdapter = FactsAdapter(this, initGlide(), viewPreloader)
-            val itemDecorator = VerticalSpacingItemDecorator(10)
-            rcv_datalist.addItemDecoration(itemDecorator)
-            rcv_datalist.setLayoutManager(LinearLayoutManager(this))
-
-            val preloader: RecyclerViewPreloader<String> = RecyclerViewPreloader(
-                Glide.with(this),
-                mAdapter,
-                viewPreloader,
-                10
+        navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.categoryFragment,
+                R.id.recipesFragment,
+                R.id.recipeFilterFragment
             )
-
-            rcv_datalist.addOnScrollListener(preloader)
-
-            rcv_datalist.adapter = mAdapter
-        } catch (e: Exception) {
-            Log.e(TAG, e.message)
-        }
+        )
+        nav_bar.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
-    private fun init() {
-
-        try {
-            mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-            rcv_datalist = findViewById(R.id.rcv_datalist)
-            pullToRefresh = findViewById(R.id.pullToRefresh)
-
-            pullToRefresh.setOnRefreshListener(OnRefreshListener {
-                mainViewModel.getFactsFromServer()
-                pullToRefresh.setRefreshing(false)
-            })
-        } catch (e: Exception) {
-            Log.e(TAG, e.message)
-        }
-    }
-
-    private fun initGlide(): RequestManager {
-        lateinit var requestManager: RequestManager
-        try {
-            val options: RequestOptions = RequestOptions()
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .error(R.drawable.ic_launcher_foreground)
-            requestManager = Glide.with(this)
-                .setDefaultRequestOptions(options)
-        } catch (e: Exception) {
-            Log.e(TAG, e.message)
-        }
-        return requestManager
-    }
-
-    override fun onFactClick(position: Int) {
-        val intent = Intent(this, FactActivity::class.java)
-        intent.putExtra("fact", mAdapter.getSelectedRecipe(position))
-        startActivity(intent)
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

@@ -10,5 +10,7 @@ class Constants {
         val READ_TIMEOUT : Int = 10 // 2 seconds
 
         val WRITE_TIMEOUT : Int = 10
+
+        val DATABASE_NAME = "facts_database"
     }
 }

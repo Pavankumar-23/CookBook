@@ -1,48 +1,32 @@
 package com.example.halfway.ui
 
-import android.graphics.Color
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
-import com.example.halfway.R
+import com.example.halfway.databinding.ActivityFactBinding
 import com.example.halfway.model.Facts
-import kotlinx.android.synthetic.main.activity_fact.*
+import com.example.halfway.util.setImage
 
 class FactActivity : AppCompatActivity() {
     private val TAG = "FactActivity"
+    private lateinit var binding: ActivityFactBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fact)
+        binding = ActivityFactBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         init()
     }
 
     private fun init() {
-        var intent = intent.extras
-        var fact : Facts = intent?.get("fact") as Facts
-        toolbar.title = fact.title
-        toolbar.setTitleTextColor(Color.WHITE)
-        tv_fact_title.text = fact.title
-        tv_fact_desc.text = fact.description
-        initGlide().load(fact.imageUrl)
-            .into(imageView)
+        val intent = intent.extras
+        val fact: Facts = intent?.get("fact") as Facts
+        supportActionBar?.let {
+            title = fact.title
+        }
+        binding.tvFactTitle.text = fact.title
+        binding.tvFactDesc.text = fact.description
+        binding.imageView.setImage(fact.imageUrl)
     }
 
-    private fun initGlide(): RequestManager {
-        lateinit var requestManager: RequestManager
-        try {
-            val options: RequestOptions = RequestOptions()
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .error(R.drawable.ic_launcher_foreground)
-            requestManager = Glide.with(this)
-                .setDefaultRequestOptions(options)
-        } catch (e: Exception) {
-            Log.e(TAG, e.message)
-        }
-        return requestManager
-    }
 }

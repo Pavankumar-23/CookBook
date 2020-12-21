@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="headingText">22sp</dimen>
+    <dimen name="subHeadingText">20sp</dimen>
+    <dimen name="bodyText">18sp</dimen>
+</resources>

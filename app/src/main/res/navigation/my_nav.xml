@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/categoryFragment">
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.halfway.ui.fragments.CategoryFragment"
+        android:label="Categories"
+        tools:layout="@layout/fragment_category">
+        <action
+            android:id="@+id/action_categoryFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.example.halfway.ui.fragments.RecipesFragment"
+        android:label="Recipes"
+        tools:layout="@layout/fragment_recipes">
+        <action
+            android:id="@+id/action_recipesFragment_to_recipeFilterFragment"
+            app:destination="@id/recipeFilterFragment" />
+        <action
+            android:id="@+id/action_recipesFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/recipeFilterFragment"
+        android:name="com.example.halfway.ui.fragments.RecipeFilterFragment"
+        android:label="fragment_recipe_filter"
+        tools:layout="@layout/fragment_recipe_filter">
+        <action
+            android:id="@+id/action_recipeFilterFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.example.halfway.ui.fragments.FavouritesFragment"
+        android:label="fragment_favourites"
+        tools:layout="@layout/fragment_favourites">
+        <action
+            android:id="@+id/action_favouritesFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.halfway.ui.fragments.RecipeDetailFragment"
+        android:label="fragment_recipe_detail"
+        tools:layout="@layout/fragment_recipe_detail">
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchRecipeFragment"
+        android:name="com.example.halfway.ui.fragments.SearchRecipeFragment"
+        android:label="fragment_search_recipe"
+        tools:layout="@layout/fragment_search_recipe" />
+</navigation>
