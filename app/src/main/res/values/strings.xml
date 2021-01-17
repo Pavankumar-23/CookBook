@@ -1,10 +1,26 @@
 <resources>
     <string name="app_name">halfway</string>
-    <string name="fact_image">Fact Image</string>
+    <string name="recipe_image">Recipe Image</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favourites">Favourites</string>
     <string name="home">Home</string>
     <string name="search">Explore</string>
     <string name="fact">Fact</string>
+    <string name="vegeterian">Vegeterian</string>
+    <string name="bookmark">bookmark</string>
+    <string name="healthscore">healthscore</string>
+    <string name="duration">duration</string>
+    <string name="recipes">Recipes</string>
+    <string name="cuisines">Cuisines</string>
+    <string name="servings">Servings</string>
+    <string name="source">Source</string>
+    <string name="diary_free">Diary Free</string>
+    <string name="gluten_free">Gluten Free</string>
+    <string name="vegan">Vegan</string>
+    <string name="description">Description</string>
+    <string name="total_kcal">Total Kcal</string>
+    <string name="carbs">Carbs</string>
+    <string name="calories">Calories</string>
+    <string name="fat">Fat</string>
 </resources>

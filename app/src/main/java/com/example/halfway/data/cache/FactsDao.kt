@@ -3,21 +3,22 @@ package com.example.halfway.data.cache
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.example.halfway.model.Facts
 import kotlinx.coroutines.flow.Flow
+import com.example.halfway.model.Result
 
 @Dao
 interface FactsDao {
 
     @Insert(onConflict = IGNORE)
-    suspend fun insertFacts(recipe: Array<Facts>): LongArray
+    suspend fun insertRecipes(recipe: Array<Result>): LongArray
 
-    @Query("SELECT * FROM facts_table Order by id Asc")
-    fun getFacts(): Flow<List<Facts>>
+    @Query("SELECT * FROM recipe_info Order by id Asc")
+    fun getRecipes(): Flow<List<Result>>
 
-    @Query("UPDATE facts_table SET title = :title,description = :desc, imageUrl = :imageUrl WHERE id = :id")
-    suspend fun updateRecipe(id: Int, title: String, desc: String, imageUrl: String)
+    @Query("SELECT * FROM recipe_info WHERE id = :id")
+    fun getRecipe(id: Int): Flow<Result>
 }
 
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="headingText">22sp</dimen>
-    <dimen name="subHeadingText">20sp</dimen>
-    <dimen name="bodyText">18sp</dimen>
+    <dimen name="headingText1">24sp</dimen>
+    <dimen name="headingText">20sp</dimen>
+    <dimen name="subHeadingText">18sp</dimen>
+    <dimen name="bodyText">16sp</dimen>
+    <dimen name="subText">14sp</dimen>
 </resources>

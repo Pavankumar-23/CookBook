@@ -1,16 +1,25 @@
 package com.example.halfway.util
 
+import com.example.halfway.HalfWay
+
 class Constants {
 
     companion object {
-        val BASE_URL = "https://dl.dropboxusercontent.com/"
+        val START_PAGE_INDEX: Int = 1
 
-        val CONNECTION_TIMEOUT : Int = 40 // 10 seconds
+        val BASE_URL = "https://api.spoonacular.com/"
 
-        val READ_TIMEOUT : Int = 10 // 2 seconds
+        val IMAGE_BASE_URL = "https://spoonacular.com/cdn/ingredients_250x250/"
 
-        val WRITE_TIMEOUT : Int = 10
+        val CONNECTION_TIMEOUT: Int = 40 // 10 seconds
+
+        val READ_TIMEOUT: Int = 10 // 2 seconds
+
+        val WRITE_TIMEOUT: Int = 10
 
         val DATABASE_NAME = "facts_database"
+
+        val api_Key = "368af4ea1f5b408ba18da1d7cbd1c864"
+
     }
 }

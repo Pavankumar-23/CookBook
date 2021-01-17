@@ -9,4 +9,5 @@
     <color name="secondaryLight">#ffff8b</color>
     <color name="white">#FFFFFFFF</color>
     <color name="backgroundColor">#1993928F</color>
+    <color name="subText">#C393928F</color>
 </resources>

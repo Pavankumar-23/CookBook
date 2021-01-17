@@ -4,116 +4,124 @@ import android.app.Application
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.halfway.model.Facts
-import com.example.halfway.model.FactsList
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.halfway.model.Receipe
+import com.example.halfway.model.RecipeCategory
 import com.example.halfway.repositories.MainRepo
 import com.example.halfway.util.NetworkResult
 import com.example.halfway.util.Util
-import com.example.halfway.util.Util.Companion.nullToEmpty
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
-
+import com.example.halfway.model.Result
+import com.example.halfway.util.Constants
+import com.example.halfway.util.Constants.Companion.api_Key
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.flow.Flow
 
 class MainViewModel @ViewModelInject constructor(
     private val mainRepo: MainRepo,
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val TAG = "MainViewModel"
+    private val tag = "MainViewModel"
 
     /** ROOM DATABASE*/
-    val readFacts: LiveData<List<Facts>> = mainRepo.local.readFacts().asLiveData()
+    val readRecipes: LiveData<List<Result>> = mainRepo.local.readFacts().asLiveData()
 
-    private suspend fun insertFacts(facts: Array<Facts>): LongArray {
-        val res = viewModelScope.async {
-            mainRepo.local.insertFacts(facts)
-        }
+    private suspend fun insertFacts(facts: Array<Result>): LongArray {
         var result = LongArray(0)
+
         try {
-            result = res.await()
+            val res = viewModelScope.async {
+                mainRepo.local.insertFacts(facts)
+            }
+            try {
+                result = res.await()
+            } catch (e: Exception) {
+                Log.e("insertFacts", e.message!!)
+            }
         } catch (e: Exception) {
-            Log.e("insertFacts", e.message!!)
+            Log.e("tag", e.toString())
         }
+        Log.d(tag, result.contentToString())
         return result
     }
 
-    private fun updateFact(
-        id: Int,
-        title: String,
-        desc: String, imageUrl: String
-    ) =
-        viewModelScope.launch {
-            mainRepo.local.updateRecipe(id, title, desc, imageUrl)
-        }
-
     /** NETWORK */
-    var factsResponse: MutableLiveData<NetworkResult<FactsList>> = MutableLiveData()
+    var factsResponse: MutableLiveData<NetworkResult<Receipe>> = MutableLiveData()
+//    var factsResponse: MutableLiveData<PagingData<Result>> = MutableLiveData()
 
     fun getFactsFromServer() = viewModelScope.launch {
         getFactsSafeCall()
     }
 
     private suspend fun getFactsSafeCall() {
+
+        /*factsResponse =
+            mainRepo.getRecipes("") as MutableLiveData<PagingData<Result>>*/
+
         factsResponse.value = NetworkResult.Loading()
         if (Util.isNetworkConnectionAvailable(getApplication())) {
             try {
-                val response = mainRepo.remote.getFacts()
+                val response = mainRepo.remote.getRecipes(
+                    api_Key, true, true, 100, "vegetarian"
+                )
                 factsResponse.value = handleServiceResponse(response)
-
-                val factsDetail = factsResponse.value!!.data
-                if (factsDetail != null) {
-                    cacheServiceResult(factsDetail.rows)
+                factsResponse.value.let {
+                    if (it?.data != null) cacheServiceResult(it.data.results)
                 }
             } catch (e: Exception) {
-                factsResponse.value = NetworkResult.Error("Facts Not Found.")
+                factsResponse.value = NetworkResult.Error("Recipes Not Found.")
             }
         } else {
             factsResponse.value = NetworkResult.Error("No Internet Connection.")
         }
     }
 
-    private fun handleServiceResponse(response: Response<FactsList>): NetworkResult<FactsList> {
-        when {
-            response.message().toString().contains("timeout") -> {
-                return NetworkResult.Error("TimeOut.")
-            }
-            response.message().toString().contains("402") -> {
-                return NetworkResult.Error("API Key limited.")
-            }
-            response.body()!!.rows.isNullOrEmpty() -> {
-                return NetworkResult.Error("No Facts Found.")
-            }
-            response.isSuccessful -> {
-                val facts = response.body()
-                return NetworkResult.Success(facts)
-            }
-            else -> {
-                return NetworkResult.Error(response.message())
+    private fun handleServiceResponse(response: Response<Receipe>): NetworkResult<Receipe> = when {
+        response.message().toString().contains("timeout") -> {
+            NetworkResult.Error("TimeOut.")
+        }
+        response.message().toString().contains("402") -> {
+            NetworkResult.Error("API Key limited.")
+        }
+        response.body()!!.results.isNullOrEmpty() -> {
+            NetworkResult.Error("No Recipes Found.")
+        }
+        response.isSuccessful -> {
+            val recipes = response.body()
+            NetworkResult.Success(recipes)
+        }
+        else -> {
+            NetworkResult.Error(response.message())
+        }
+    }
+
+    private fun cacheServiceResult(list: List<Result>) {
+        viewModelScope.launch {
+            try {
+                val recipes: Array<Result> = list.toTypedArray()
+                for ((index, rowid) in insertFacts(recipes).withIndex()) {
+                    Log.d(tag, "$index cacheServiceResult: $rowid")
+                }
+            } catch (e: Exception) {
+                Log.e(tag, e.message!!)
             }
         }
     }
 
-    private fun cacheServiceResult(list: List<Facts>) {
-        viewModelScope.launch {
-            try {
-                if (list != null) {
-                    val facts: Array<Facts> = list.toTypedArray()
-                    for ((index, rowid) in insertFacts(facts).withIndex()) {
-                        if (rowid == -1L) {
-                            updateFact(
-                                facts[index].id,
-                                facts[index].title,
-                                nullToEmpty(facts[index].description),
-                                nullToEmpty(facts[index].imageUrl)
-                            )
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("TAG", e.message!!)
-            }
-        }
+    fun readCategoryData(): List<RecipeCategory> {
+        return listOf<RecipeCategory>(
+            RecipeCategory("Indian", "indian"),
+            RecipeCategory("Mexican", "mexican"),
+            RecipeCategory("Thai", "thai"),
+            RecipeCategory("Indian", "french"),
+            RecipeCategory("Chinese", "chinese"),
+            RecipeCategory("German", "german")
+        )
     }
+
 }

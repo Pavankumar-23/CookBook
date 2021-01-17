@@ -1,11 +1,11 @@
 package com.example.halfway.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.halfway.model.Facts
+import com.example.halfway.model.Result
 
-class FactsDiffUtil(
-    private val oldList: List<Facts>,
-    private val newList: List<Facts>
+class FactsDiffUtil<T>(
+    private val oldList: List<T>,
+    private val newList: List<T>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size

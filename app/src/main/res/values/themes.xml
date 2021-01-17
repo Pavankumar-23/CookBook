@@ -14,21 +14,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="headingText">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/headingText</item>
-        <item name="fontFamily">@font/roboto</item>
-    </style>
-
-    <style name="subHeadingText">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/subHeadingText</item>
-        <item name="fontFamily">@font/roboto</item>
-    </style>
-
-    <style name="bodyText">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/bodyText</item>
-        <item name="fontFamily">@font/roboto</item>
-    </style>
 </resources>

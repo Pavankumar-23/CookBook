@@ -1,13 +1,13 @@
 package com.example.halfway.data.cache
 
-import android.content.Context
-import android.util.Log
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.halfway.model.Facts
+import androidx.room.TypeConverters
+import com.example.halfway.model.Result
+import com.example.halfway.util.Converters
 
-@Database(entities = [Facts::class], version = 1, exportSchema = false)
+@Database(entities = [Result::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class FactsDb : RoomDatabase() {
 
     abstract fun factsDao(): FactsDao

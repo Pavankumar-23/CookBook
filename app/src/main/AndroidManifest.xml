@@ -19,8 +19,9 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ui.FactActivity"
-            android:label="@string/fact"/>
+            android:name=".ui.RecipeDetailsActivity"
+            android:label="Recipe Details"
+            android:theme="@style/DetailsActivityStyle" />
 
         <activity android:name=".ui.MainActivity">
             <intent-filter>

@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="2dp">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
+        android:layout_marginBottom="16dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,16 +19,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_factImage"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_factImage"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:contentDescription="@string/fact_image"
-                android:scaleType="centerCrop"
+                android:layout_margin="6dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_factImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/recipe_image"
+                    android:scaleType="fitXY"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="130dp" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -37,22 +54,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/goto_fact"
-                app:layout_constraintStart_toEndOf="@+id/iv_factImage"
+                android:layout_marginEnd="12dp"
+                android:singleLine="true"
+                app:layout_constraintEnd_toStartOf="@+id/bt_fav"
+                app:layout_constraintStart_toEndOf="@+id/cv_factImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/goto_fact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_desc"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_next"
-                app:tint="@color/secondaryDark" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_desc"
@@ -61,25 +68,108 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
-                android:maxLines="3"
+                android:maxLines="1"
                 app:layout_constraintEnd_toEndOf="@+id/tv_title"
                 app:layout_constraintStart_toStartOf="@+id/tv_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
                 tools:text="asdasdasdasdasdasdsadasdasdasdsadasd" />
 
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="0.8dp"
+                android:layout_margin="8dp"
+                android:background="@color/backgroundColor"
+                app:layout_constraintEnd_toEndOf="@+id/bt_fav"
+                app:layout_constraintStart_toEndOf="@+id/cv_factImage"
+                app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
+
+            <ImageView
+                android:id="@+id/ic_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/healthscore"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cv_factImage"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                app:srcCompat="@drawable/ic_health_score" />
+
+            <TextView
+                android:id="@+id/tv_health_score"
+                style="@style/subBodyText"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_score"
+                app:layout_constraintStart_toEndOf="@+id/ic_score"
+                app:layout_constraintTop_toTopOf="@+id/ic_score"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="10%" />
+
+            <ImageView
+                android:id="@+id/ic_recipe_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/duration"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_health_score"
+                app:layout_constraintStart_toEndOf="@+id/tv_health_score"
+                app:layout_constraintTop_toTopOf="@+id/tv_health_score"
+                app:srcCompat="@drawable/ic_timer" />
+
+            <TextView
+                android:id="@+id/tv_duration"
+                style="@style/subBodyText"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:gravity="center_vertical"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_health_score"
+                app:layout_constraintStart_toEndOf="@+id/ic_recipe_duration"
+                tools:text="40 min" />
+
+            <ImageView
+                android:id="@+id/ic_food_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/vegeterian"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_duration"
+                app:layout_constraintStart_toEndOf="@+id/tv_duration"
+                app:layout_constraintTop_toTopOf="@+id/tv_duration"
+                app:srcCompat="@drawable/ic_veg" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                style="@style/subBodyText"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:gravity="center_vertical"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_duration"
+                app:layout_constraintStart_toEndOf="@+id/ic_food_type"
+                tools:text="veg" />
+
             <ImageView
                 android:id="@+id/bt_fav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:contentDescription="@string/bookmark"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_favorite"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/goto_fact"
-                app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-                app:tint="@android:color/holo_red_dark" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_favorite_border" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
