@@ -8,26 +8,28 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layoutDescription="@xml/fact_item_view_xml_constraintlayout2_scene">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_factImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="6dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
+                app:cardCornerRadius="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -36,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/recipe_image"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/avatars" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -49,7 +51,7 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                style="@style/subHeadingText"
+                style="@style/bodyText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -63,7 +65,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_desc"
-                style="@style/bodyText"
+                style="@style/subBodyText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -86,8 +88,8 @@
 
             <ImageView
                 android:id="@+id/ic_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
@@ -113,8 +115,8 @@
 
             <ImageView
                 android:id="@+id/ic_recipe_duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/duration"
                 android:scaleType="centerCrop"
@@ -130,14 +132,15 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="2dp"
                 android:gravity="center_vertical"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_health_score"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_recipe_duration"
                 app:layout_constraintStart_toEndOf="@+id/ic_recipe_duration"
+                app:layout_constraintTop_toTopOf="@+id/ic_recipe_duration"
                 tools:text="40 min" />
 
             <ImageView
                 android:id="@+id/ic_food_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/vegeterian"
                 android:scaleType="centerCrop"
@@ -153,8 +156,9 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="2dp"
                 android:gravity="center_vertical"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_duration"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_food_type"
                 app:layout_constraintStart_toEndOf="@+id/ic_food_type"
+                app:layout_constraintTop_toTopOf="@+id/ic_food_type"
                 tools:text="veg" />
 
             <ImageView
@@ -169,7 +173,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_favorite_border" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

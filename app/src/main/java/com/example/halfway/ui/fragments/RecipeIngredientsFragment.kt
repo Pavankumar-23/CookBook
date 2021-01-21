@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.halfway.R
 import com.example.halfway.adapters.CategoryAdapter
 import com.example.halfway.databinding.FragmentRecipeIngredientsBinding
 import com.example.halfway.model.Result

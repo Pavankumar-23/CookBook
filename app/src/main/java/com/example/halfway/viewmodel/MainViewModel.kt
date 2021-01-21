@@ -4,8 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.example.halfway.model.Receipe
 import com.example.halfway.model.RecipeCategory
 import com.example.halfway.repositories.MainRepo
@@ -16,10 +14,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
 import com.example.halfway.model.Result
-import com.example.halfway.util.Constants
-import com.example.halfway.util.Constants.Companion.api_Key
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.flow.Flow
+import com.example.halfway.util.Constants.Companion.API_KEY
 
 class MainViewModel @ViewModelInject constructor(
     private val mainRepo: MainRepo,
@@ -67,7 +62,7 @@ class MainViewModel @ViewModelInject constructor(
         if (Util.isNetworkConnectionAvailable(getApplication())) {
             try {
                 val response = mainRepo.remote.getRecipes(
-                    api_Key, true, true, 100, "vegetarian"
+                    API_KEY, true, true, 100, "vegetarian"
                 )
                 factsResponse.value = handleServiceResponse(response)
                 factsResponse.value.let {

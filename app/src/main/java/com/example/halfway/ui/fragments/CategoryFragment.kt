@@ -1,6 +1,7 @@
 package com.example.halfway.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.halfway.util.NetworkResult
 import com.example.halfway.util.observeOnce
 import com.example.halfway.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -35,8 +37,12 @@ class CategoryFragment : Fragment(), OnFactClickListener {
     ): View {
         _binding = FragmentCategoryBinding.inflate(inflater)
         binding.pbLoading.show()
-        init()
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        init()
     }
 
     private fun init() {
@@ -86,7 +92,6 @@ class CategoryFragment : Fragment(), OnFactClickListener {
     private fun readFromDatabase() {
 
         lifecycleScope.launch {
-            delay(5000)
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner, {
                 if (it.isNotEmpty()) {
                     binding.pbLoading.hide()
@@ -108,7 +113,6 @@ class CategoryFragment : Fragment(), OnFactClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 }
 

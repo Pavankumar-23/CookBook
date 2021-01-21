@@ -23,4 +23,5 @@
     <string name="carbs">Carbs</string>
     <string name="calories">Calories</string>
     <string name="fat">Fat</string>
+    <string name="filter">filter</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.example.halfway.R
 import com.example.halfway.databinding.FragmentRecipeOverviewBinding
 import com.example.halfway.model.Result
+import com.example.halfway.util.Constants
 import com.example.halfway.util.setDrawable
 import com.example.halfway.util.setImage
 import org.jsoup.Jsoup
@@ -36,7 +37,8 @@ class RecipesOverviewFragment : Fragment() {
 
         recipe.let {
             binding.apply {
-                ivRecipeImage.setImage(recipe.image, root)
+                val imageUrl = Constants.RECIPE_IMAGE_BASE_URL + recipe.id + "-556x370.jpg"
+                ivRecipeImage.setImage(imageUrl, root, 480, 420)
 
                 tvRecipeTitle.text = recipe.title
 

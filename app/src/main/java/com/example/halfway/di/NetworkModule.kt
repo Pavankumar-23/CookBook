@@ -2,6 +2,8 @@ package com.example.halfway.di
 
 import com.example.halfway.data.network.ApiService
 import com.example.halfway.util.Constants.Companion.BASE_URL
+import com.example.halfway.util.Constants.Companion.CONNECTION_TIMEOUT
+import com.example.halfway.util.Constants.Companion.READ_TIMEOUT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,8 +23,8 @@ object NetworkModule {
     @Provides
     fun provideHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
 

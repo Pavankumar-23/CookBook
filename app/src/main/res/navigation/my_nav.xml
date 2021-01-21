@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/categoryToRecipeDetail"
-            app:destination="@id/recipeDetailsActivity" />
+            app:destination="@id/recipeDetailsActivity"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/categoryToRecipeFilter"
             app:destination="@id/recipeFilterFragment" />

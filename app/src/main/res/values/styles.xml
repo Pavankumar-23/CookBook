@@ -41,26 +41,28 @@
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="actionBarBackGround" parent="Widget.Design.TabLayout">
         <item name="background">@color/primary</item>
-        <item name="tabIndicatorColor">@color/secondary</item>
+        <item name="tabIndicatorColor">@color/colorOnPrimaryDark</item>
         <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabRippleColor">@color/secondaryLight</item>
-        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabRippleColor">@color/colorOnPrimaryLight</item>
+        <item name="tabSelectedTextColor">@color/colorOnPrimaryDark</item>
     </style>
 
     <style name="customTabTextColor" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/colorOnPrimaryDark</item>
     </style>
 
     <style name="DetailsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryDark</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="android:statusBarColor">@color/primaryDark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorOnPrimaryDark</item>
+        <item name="android:statusBarColor">@color/primaryLight</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
+
 </resources>

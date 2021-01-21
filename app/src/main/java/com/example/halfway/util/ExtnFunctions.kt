@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.halfway.R
 
@@ -19,10 +20,12 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
     })
 }
 
-fun ImageView.setImage(imageUrl: String?, itemView: View) {
+fun ImageView.setImage(imageUrl: String?, itemView: View, width: Int, height: Int) {
     Glide.with(itemView)
         .load(imageUrl)
-        .centerCrop()
+        .dontTransform()
+        .override(width, height)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
         .transition(DrawableTransitionOptions.withCrossFade())
         .error(R.drawable.ic_launcher_foreground)
         .into(this)

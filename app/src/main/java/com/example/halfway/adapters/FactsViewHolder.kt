@@ -6,6 +6,7 @@ import com.example.halfway.R
 import com.example.halfway.databinding.FactItemViewBinding
 import com.example.halfway.listeners.OnFactClickListener
 import com.example.halfway.model.Result
+import com.example.halfway.util.Constants.Companion.RECIPE_IMAGE_BASE_URL
 import com.example.halfway.util.setDrawable
 import com.example.halfway.util.setImage
 import java.util.*
@@ -29,7 +30,8 @@ class FactsViewHolder(
 
             root.setOnClickListener(this@FactsViewHolder)
             btFav.setOnClickListener(this@FactsViewHolder)
-            ivFactImage.setImage(recipe.image, itemView)
+            val imageUrl = RECIPE_IMAGE_BASE_URL + recipe.id + "-312x231.jpg"
+            ivFactImage.setImage(imageUrl, itemView, 260, 260)
             tvTitle.text = recipe.title
             tvDesc.text = recipe.diets.joinToString(", ") { it.capitalize(Locale.ROOT) }
             tvHealthScore.text = String.format("%d%s", recipe.healthScore.toInt(), "%")
@@ -44,4 +46,5 @@ class FactsViewHolder(
 
         }
     }
+
 }

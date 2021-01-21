@@ -30,7 +30,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
             toolbar.setTitleTextColor(
                 ContextCompat.getColor(
                     this@RecipeDetailsActivity,
-                    R.color.white
+                    R.color.colorOnPrimaryDark
                 )
             )
             supportActionBar?.setDisplayHomeAsUpEnabled(true)

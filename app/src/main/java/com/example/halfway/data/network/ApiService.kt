@@ -4,6 +4,7 @@ import com.example.halfway.model.Receipe
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface ApiService {
 
@@ -18,10 +19,7 @@ interface ApiService {
 
     @GET("recipes/complexSearch")
     suspend fun getFactsFromService(
-        @Query("apiKey") apikey: String,
-        @Query("addRecipeNutrition") addRecipeInformation: Boolean,
-        @Query("fillIngredients") fillIngredients: Boolean,
-        @Query("number") number: Int
+        @QueryMap queryMap: HashMap<String, String>
     ): Response<Receipe>
 
     @GET("recipes/complexSearch")
