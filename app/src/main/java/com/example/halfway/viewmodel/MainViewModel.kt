@@ -115,7 +115,8 @@ class MainViewModel @ViewModelInject constructor(
             RecipeCategory("Thai", "thai"),
             RecipeCategory("Indian", "french"),
             RecipeCategory("Chinese", "chinese"),
-            RecipeCategory("German", "german")
+            RecipeCategory("German", "german"),
+            RecipeCategory("Italian", "italian")
         )
     }
 
